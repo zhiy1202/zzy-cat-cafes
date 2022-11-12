@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--admin-top-->
+<div class="navbar-header" th:fragment="admin-top">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="index.html">猫咖</a>
+</div>
+
+<!--admin-left-->
+<div class="sidebar-collapse" th:fragment="admin-left">
+    <ul class="nav" id="main-menu">
+
+        <li>
+            <a class="active-menu" href="/admin/index"><i class="fa fa-dashboard"></i> 总控</a>
+        </li>
+        <li>
+            <a href="/petManager"><i class="fa fa-bar-chart-o"></i> 宠物管理</a>
+        </li>
+        <li>
+            <a href="/petActive"><i class="fa fa-qrcode"></i> 远程操控</a>
+        </li>
+
+        <li>
+            <a href="/userManager"><i class="fa fa-table"></i> 用户管理</a>
+        </li>
+        <li>
+            <a href="/admin/addPet"><i class="fa fa-edit"></i> 新增宠物 </a>
+        </li>
+        <li>
+            <a href="/admin/exit"><i class="fa fa-edit"></i> 退出 </a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>
+
+<!--user-top-->
+<div class="container" th:fragment="user-top">
+    <div class="navbar-header" >
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">猫咖</a>
+    </div>
+
+    <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="/index">主页</a></li>
+            <li><a href="/petUpload">寄养</a></li>
+            <li><a href="/shopPet">出售</a></li>
+            <li><a href="/mySelf">我的</a></li>
+            <li>
+                <form action="/pet/searchPet">
+                    <input type="text" name="petName">
+                    <button type="submit">搜索</button>
+                </form>
+            </li>
+        </ul>
+    </div><!-- /.nav-collapse -->
+
+</div><!-- /.container -->
+
+<!--user-left-->
+<div class="left_bar" th:fragment="user-left">
+    <ul class="list-group">
+        <li class="list-group-item"><a href="/mySelf">我的信息</a></li>
+        <li class="list-group-item"><a href="/userBuyPet">购买的宠物</a></li>
+        <li class="list-group-item"><a href="/userUploadPet">寄养的宠物</a></li>
+        <li class="list-group-item"><a href="/userShopPet">我的出售</a></li>
+        <li class="list-group-item"><a href="/exit">退出</a></li>
+    </ul>
+</div>

@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+      <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>猫咖控制台</title>
+    <!-- Bootstrap Styles-->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- FontAwesome Styles-->
+    <link href="/static/css/font-awesome.css" rel="stylesheet" />
+    <!-- Custom Styles-->
+    <link href="/static/css/custom-styles.css" rel="stylesheet" />
+     <!-- Google Fonts-->
+   <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <!--         vue-->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
+    <!--         axios-->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div id="wrapper">
+        <nav class="navbar navbar-default top-navbar" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">猫咖管理平台</a>
+            </div>
+        </nav>
+        <nav class="navbar navbar-default top-navbar" role="navigation">
+            <div th:insert="~{common/common::admin-top}"></div>
+        </nav>
+        <!--/. NAV TOP  -->
+        <nav class="navbar-default navbar-side" role="navigation">
+            <div th:insert="~{common/common::admin-left}"></div>
+        </nav>
+        <!-- /. NAV SIDE  -->
+        <div id="page-wrapper" >
+            <div id="page-inner">
+			 <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="page-header">
+                            远程操作 <small>代操作</small>
+                        </h1>
+                    </div>
+                </div> 
+
+                                        <!-- /. ROW  -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="jumbotron">
+                        <h1 >一键完成</h1>
+                        <p>请注意所有操作都完成才点击此按钮</p>
+                        <p>
+                            <a @click="delAllActive" class="btn btn-primary btn-lg" role="button">完成</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+                 <!-- /. ROW  -->
+                                 
+            <div class="row">
+                <div class="col-md-4 col-sm-4" v-for="item in allActive">
+                    <div class="panel panel-default" >
+                        <div class="panel-heading">
+                            {{item.petId}}
+                        </div>
+                        <div class="panel-body">
+                            <p>{{item.content}}</p>
+                        </div>
+                        <div class="panel-footer">
+                            <button @click="delUserActive(item.uoId)">完成</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                    <!-- /. ROW  -->
+				<footer><p>@ 猫咖管理控制台</p></footer>
+					</div>
+			 <!-- /. PAGE INNER  -->
+            </div>
+         <!-- /. PAGE WRAPPER  -->
+        </div>
+     <!-- /. WRAPPER  -->
+    <!-- JS Scripts-->
+    <!-- jQuery Js -->
+    <script src="/static/js/jquery-1.10.2.js"></script>
+    <!-- Bootstrap Js -->
+    <script src="/static/js/bootstrap.min.js"></script>
+    <!-- Metis Menu Js -->
+    <script src="/static/js/jquery.metisMenu.js"></script>
+    <!-- Custom Js -->
+    <script src="/static/js/custom-scripts.js"></script>
+    
+   <script>
+       let vm = new Vue({
+           el:'#page-wrapper',
+           data:{
+               allActive:[]
+           },
+           methods:{
+               delUserActive(uoId){
+                   let that = this
+                   axios.delete('/userOpration/delActive/'+uoId).then(res=>{
+                       if (res.data){
+                           alert("完成操作")
+                           axios.get('/userOpration/allActive').then(res=>{
+                               that.allActive = res.data
+                           })
+                       }
+                   })
+               },
+               delAllActive(){
+                   axios.delete('/userOpration/delAllActive').then(res=>{
+                       if (res.data){
+                           alert("所有操作已完成")
+                           axios.get('/userOpration/allActive').then(res=>{
+                               that.allActive = res.data
+                           })
+                       }
+                   })
+               }
+           },
+           mounted(){
+               console.log('mounted')
+               let that = this
+               axios.get('/userOpration/allActive').then(res=>{
+                   that.allActive = res.data
+               })
+           }
+       })
+   </script>
+</body>
+</html>

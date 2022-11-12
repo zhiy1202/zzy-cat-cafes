@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<html lang="zxx" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>猫咖</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="keywords" content="Modish Login Form Responsive Widget,Login form widgets, Sign up Web forms , Login signup Responsive web form,Flat Pricing table,Flat Drop downs,Registration Forms,News letter Forms,Elements"
+  />
+  <!-- css files -->
+  <link rel="stylesheet" href="/static/css/login1.css" type="text/css" media="all" />
+  <!-- Style-CSS -->
+  <link rel="stylesheet" href="/static/css/login2.css">
+  <link rel="icon" href="/static/images/zzy.jpg">
+</head>
+
+<body>
+<!-- title -->
+<h1>
+  <span>欢</span>
+  <span>迎</span>
+  <span>使</span>
+  <span>用</span>
+  <span>猫</span>
+  <span>咖</span>
+</h1>
+<!-- //title -->
+
+<!-- content -->
+<div class="sub-main-w3">
+  <form class="login" action="/user/addUser" method="post">
+    <fieldset>
+      <p class="legend">注册猫咖<i class="far fa-hand-point-down"></i></p>
+      <h3 th:text="${register}"></h3>
+      <div class="input">
+        <input type="username" placeholder="用户名" name="username" required />
+        <span>
+						<i class="fas fa-envelope"></i>
+					</span>
+      </div>
+      <div class="input">
+        <input type="password" placeholder="密码" name="password" required />
+        <span>
+						<i class="fas fa-lock-open"></i>
+					</span>
+      </div>
+      <div class="input">
+        <input type="text" placeholder="联系电话" name="telephone" required />
+        <span>
+						<i class="fas fa-lock-open"></i>
+					</span>
+      </div>
+      <div class="input">
+        <input type="text" placeholder="居住地址" name="address" required />
+        <span>
+						<i class="fas fa-lock-open"></i>
+					</span>
+      </div>
+      <button type="submit" class="submit">
+        <i class="fas fa-sign-in-alt"></i>
+      </button>
+      <a href="/">登录</a>
+    </fieldset>
+    <div class="feedback">
+      You have logged in
+      <br /> successfully.
+    </div>
+  </form>
+</div>
+<!-- //content -->
+
+<!-- copyright -->
+<div class="footer">
+  <h2>&copy; 2022 猫咖</h2>
+</div>
+<!-- //copyright -->
+
+
+<!-- Jquery -->
+<script src="js/jquery-2.2.3.min.js"></script>
+<!-- //Jquery -->
+<!-- script -->
+<script>
+  $(".input").focusin(function () {
+    $(this).find("span").animate({
+      "opacity": "0"
+    }, 200);
+  });
+
+  $(".input").focusout(function () {
+    $(this).find("span").animate({
+      "opacity": "1"
+    }, 300);
+  });
+
+  $(".login").submit(function () {
+    $(this).find(".submit i").removeAttr('class').addClass("fa fa-check").css({
+      "color": "#fff"
+    });
+    $(".submit").css({
+      "background": "#2ecc71",
+      "border-color": "#2ecc71"
+    });
+    $(".feedback").show().animate({
+      "opacity": "1",
+      "bottom": "-80px"
+    }, 400);
+    $("input").css({
+      "border-color": "#2ecc71"
+    });
+    return false;
+  });
+</script>
+<!-- //script -->
+
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+
+<!doctype html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/static/images/zzy.jpg">
+    <title>猫咖</title>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/bootstrap-theme.min.css" rel="stylesheet">
+    <style>
+      .img_bar{
+        width: 100%;
+        height: 130px;
+        display: inline-block;
+      }
+      .img_item{
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-fixed-top navbar-inverse">
+<!--        user-top-->
+      <div th:insert="~{common/common::user-top}"></div>
+    </nav><!-- /.navbar -->
+
+    <div class="container">
+
+      <div class="row row-offcanvas row-offcanvas-right">
+
+        <div class="col-xs-12 col-sm-9">
+          <p class="pull-right visible-xs">
+            <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
+          </p>
+          <div class="jumbotron">
+            <h1>欢迎进入猫咖!</h1>
+            <p>猫咖是针对爱猫人士所开发的网站，在这里你可以观看和了解你喜欢的猫猫，也可以领养，寄养，远程为你的猫猫喂食和玩乐。</p>
+          </div>
+          <div class="row">
+
+            <div class="col-xs-6 col-lg-4 bar" th:each="item : ${petList}">
+              <h2 th:text="${item.getPetName()}">波斯猫</h2>
+              <div class="img_bar">
+                <img class="img_item" th:src="${item.getImgPath()}" src="/static/images/b1.jpg"/>
+              </div>
+              <p><a class="btn btn-default" th:href="@{/petDetail/}+${item.getPetId()}" role="button">了解详情 &raquo;</a></p>
+            </div><!--/.col-xs-6.col-lg-4-->
+
+          </div><!--/row-->
+        </div><!--/.col-xs-12.col-sm-9-->
+      </div>
+
+      <hr>
+
+      <footer>
+        <p>&copy; 2022 猫咖</p>
+      </footer>
+
+    </div><!--/.container-->
+
+    <script src="https://cdn.jsdelivr.cn/npm/jquery@1.12.4/dist/jquery.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="https://cdn.jsdelivr.cn/npm/@bootcss/v3.bootcss.com@1.0.44/assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="https://cdn.jsdelivr.cn/npm/@bootcss/v3.bootcss.com@1.0.44/dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="https://cdn.jsdelivr.cn/npm/@bootcss/v3.bootcss.com@1.0.44/assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="https://cdn.jsdelivr.cn/npm/@bootcss/v3.bootcss.com@1.0.44/examples/offcanvas/offcanvas.js"></script>
+  </body>
+</html>

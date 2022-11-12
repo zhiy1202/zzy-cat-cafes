@@ -1,0 +1,142 @@
+   <!DOCTYPE html>
+   <html lang="en" xmlns:th="http://www.thymeleaf.org">
+      <head>
+         <title>猫咖寄养</title>
+         <!-- Meta tags -->
+         <meta name="viewport" content="width=device-width, initial-scale=1" />
+         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+         <meta name="keywords" content="Pet Found Form Responsive Widget, Audio and Video players, Login Form Web Template, Flat Pricing Tables, Flat Drop-Downs, Sign-Up Web Templates, Flat Web Templates, Login Sign-up Responsive Web Template, Smartphone Compatible Web Template, Free Web Designs for Nokia, Samsung, LG, Sony Ericsson, Motorola Web Design"
+            />
+         <link href="/static/css/petUpload.css" rel='stylesheet' type='text/css' media="all">
+         <link rel="icon" href="/static/images/zzy.jpg">
+<!--         vue-->
+         <script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
+<!--         axios-->
+         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+      </head>
+      <body>
+      <div id="app">
+         <h1 class="header-w3ls">
+            寄养宠物
+         </h1>
+         <!-- multistep form -->
+         <div class="main-bothside">
+            <form action="#" method="post">
+
+               <div class="form-group">
+                  <div class="form-mid-w3ls">
+                     <input type="text" name="name" v-model="pet.petName" placeholder="宠物名" required="">
+                  </div>
+                  <div class="form-mid-w3ls">
+                     <input type="text" name="Age" v-model="pet.petAge" class="form-control" placeholder="年龄">
+                  </div>
+                  <div class="form-mid-w3ls">
+                     <input type="text" name="weight" v-model="pet.petWeight" placeholder="重量" required="">
+                  </div>
+               </div>
+
+               <div class="form-group">
+                  <div class="form-mid-w3ls">
+                     <input type="text" name="State" v-model="pet.petState" placeholder="状态" required="">
+                  </div>
+                  <div class="form-mid-w3ls">
+                     <input type="text" name="intro" v-model="pet.petIntro" placeholder="简介">
+                  </div>
+                  <div class="form-mid-w3ls">
+                     <input type="email" name="Breed/type" v-model="pet.petType" placeholder="种类">
+                  </div>
+               </div>
+
+               <div class="parent-clss">
+
+                  <div class="personal-info">
+                     <div class="form-mid-w3ls">
+                        <input type="text" name="weight" v-model="pet.petLife" placeholder="生活习性" required="">
+                     </div>
+                  </div>
+                  <div class="personal-info">
+                     <p>性别</p>
+                     <div class="form-check">
+                        <input class="form-check-input" type="radio" v-model="pet.petGender" name="select4" value="0" checked="">
+                        <label class="form-check-label">
+                           雄
+                        </label>
+                     </div>
+                     <div class="form-check">
+                        <input class="form-check-input" type="radio" v-model="pet.petGender" name="select4" value="1" checked="">
+                        <label class="form-check-label">
+                           母
+                        </label>
+                     </div>
+                  </div>
+
+               </div>
+               <div class="custom-file form-left-choose">
+                  <input type="file" class="custom-file-input" id="customFile">
+               </div>
+
+               <input type="button" class="custom-file-input" @click="petUpload" value="寄养">
+            </form>
+         </div>
+         <div class="copy">
+            <p>©2022 猫咖</p>
+         </div>
+      </div>
+
+      <script>
+         let vm = new Vue({
+            el:'#app',
+            data:{
+               pet:{
+                  petName:'',
+                  petAge:'',
+                  petWeight:'',
+                  petType:'',
+                  petGender:0,
+                  petPrice:0,
+                  petIntro:'',
+                  petLife:'',
+                  petState:'',
+                  file:{}
+               }
+            },
+            methods:{
+               petUpload(){
+                  console.log(this.pet)
+                  let formData = new FormData()
+                  formData.append('petName',this.pet.petName)
+                  formData.append('petAge',this.pet.petAge)
+                  formData.append('petWeight',this.pet.petWeight)
+                  formData.append('petType',this.pet.petType)
+                  formData.append('petGender',this.pet.petGender)
+                  formData.append('petIntro',this.pet.petIntro)
+                  formData.append('petLife',this.pet.petLife)
+                  formData.append('petState',this.pet.petState)
+                  formData.append('file',this.pet.file)
+                  axios.post('/userPet/addPet',formData).then(res=>{
+                     console.log(res)
+                     if (res.data){
+                        alert('寄养成功')
+                     }
+                  })
+               }
+            },
+            created(){
+               console.log('vue start')
+            },
+            mounted(){
+               console.log('mounted')
+               let f = document.getElementById('customFile')
+               let that = this
+               f.onchange=function(e){
+                  //获取到文件以后就会返回一个对象，通过这个对象即可获取文件
+                  console.log(e.currentTarget.files);//所有文件，返回的是一个数组
+                  let file = e.currentTarget.files[0]
+                  that.pet.file = file
+               }
+            }
+         })
+
+      </script>
+      </body>
+   </html>

@@ -1,0 +1,188 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+      <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>猫咖控制台</title>
+    <!-- Bootstrap Styles-->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- FontAwesome Styles-->
+    <link href="/static/css/font-awesome.css" rel="stylesheet" />
+    <!-- Custom Styles-->
+    <link href="/static/css/custom-styles.css" rel="stylesheet" />
+     <!-- Google Fonts-->
+   <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <!--         vue-->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
+    <!--         axios-->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div id="wrapper">
+        <nav class="navbar navbar-default top-navbar" role="navigation">
+            <div th:insert="~{common/common::admin-top}"></div>
+        </nav>
+        <!--/. NAV TOP  -->
+        <nav class="navbar-default navbar-side" role="navigation">
+            <div th:insert="~{common/common::admin-left}"></div>
+        </nav>
+
+
+        <!-- /. NAV SIDE  -->
+        <div id="page-wrapper" >
+            <div id="page-inner">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="page-header">
+                            出售宠物 <small>shop Pet.</small>
+                        </h1>
+                    </div>
+                </div>
+                <!-- /. ROW  -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                宠物信息
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <form role="form">
+                                            <div class="form-group">
+                                                <label>宠物名</label>
+                                                <input class="form-control" placeholder="宠物名" v-model="pet.petName">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>宠物年龄</label>
+                                                <input class="form-control" placeholder="宠物年龄" v-model="pet.petAge">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>体重</label>
+                                                <input class="form-control" placeholder="体重" v-model="pet.petWeight">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>种类</label>
+                                                <input class="form-control" placeholder="种类" v-model="pet.petType">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>状态</label>
+                                                <input class="form-control" placeholder="状态" v-model="pet.petState">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>简介</label>
+                                                <input class="form-control" placeholder="简介" v-model="pet.petIntro">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>宠物习性</label>
+                                                <textarea class="form-control" rows="3" v-model="pet.petLife"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>性别</label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="optionsRadiosInline" v-model="pet.petGender" id="optionsRadiosInline1" value="0" checked="">雄性
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="optionsRadiosInline" v-model="pet.petGender" id="optionsRadiosInline2" value="1">雌性
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>价格</label>
+                                                <div class="form-group input-group">
+                                                    <span class="input-group-addon">$</span>
+                                                    <input type="text" class="form-control" v-model="pet.petPrice">
+                                                    <span class="input-group-addon">.00</span>
+                                                </div>
+                                            </div>
+                                            <div class="custom-file form-left-choose">
+                                                <input type="file" class="custom-file-input" id="customFile">
+                                            </div>
+                                            <button type="button" class="btn btn-default" @click="addPet">保存</button>
+                                            <button type="reset" class="btn btn-default" @click="reset">重置</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- /.row (nested) -->
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                        <!-- /.panel -->
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <footer><p>@猫咖管理控制台</p></footer>
+            </div>
+            <!-- /. PAGE INNER  -->
+        </div>
+
+
+
+         <!-- /. PAGE WRAPPER  -->
+        </div>
+     <!-- /. WRAPPER  -->
+    <!-- jQuery Js -->
+    <script src="/static/js/jquery-1.10.2.js"></script>
+    <!-- Bootstrap Js -->
+    <script src="/static/js/bootstrap.min.js"></script>
+    <!-- Metis Menu Js -->
+    <script src="/static/js/jquery.metisMenu.js"></script>
+    <!-- Custom Js -->
+    <script src="/static/js/custom-scripts.js"></script>
+
+    <script>
+        let vm = new Vue({
+            el:'#page-wrapper',
+            data:{
+                pet:{
+                    petName:'',
+                    petAge:'',
+                    petWeight:'',
+                    petType:'',
+                    petGender:0,
+                    petPrice:0,
+                    petIntro:'',
+                    petLife:'',
+                    petState:'',
+                    file:{}
+                }
+            },
+            methods:{
+                addPet(){
+                    console.log(this.pet)
+                    let formData = new FormData()
+                    formData.append('petName',this.pet.petName)
+                    formData.append('petAge',this.pet.petAge)
+                    formData.append('petWeight',this.pet.petWeight)
+                    formData.append('petType',this.pet.petType)
+                    formData.append('petGender',this.pet.petGender)
+                    formData.append('petIntro',this.pet.petIntro)
+                    formData.append('petLife',this.pet.petLife)
+                    formData.append('petState',this.pet.petState)
+                    formData.append('petPrice',this.pet.petPrice)
+                    formData.append('file',this.pet.file)
+                    axios.post('/pet/addPet',formData).then(res=>{
+                        console.log(res)
+                        if (res.data){
+                            alert('发布成功')
+                        }
+                    })
+                },
+                reset(){
+                    console.log('reset')
+                }
+            },
+            mounted(){
+                console.log('mounted')
+                let f = document.getElementById('customFile')
+                let that = this
+                f.onchange=function(e){
+                    //获取到文件以后就会返回一个对象，通过这个对象即可获取文件
+                    console.log(e.currentTarget.files);//所有文件，返回的是一个数组
+                    let file = e.currentTarget.files[0]
+                    that.pet.file = file
+                }
+            }
+        })
+    </script>
+</body>
+</html>

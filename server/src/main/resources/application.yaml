@@ -1,0 +1,23 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: server
+  mvc:
+    static-path-pattern: /static/**
+
+  thymeleaf:
+    cache: false
+
+  datasource:
+#    url: jdbc:mysql://localhost:3306/hlw?serverTimezone=UTC&characterEncoding=utf8&useUnicode=true
+    username: root
+    password: 333
+
+  servlet:
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 200MB
+
+

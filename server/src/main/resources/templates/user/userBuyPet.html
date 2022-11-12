@@ -1,0 +1,110 @@
+
+<!doctype html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/static/images/zzy.jpg">
+    <title>猫咖</title>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/static/css/user.css" rel="stylesheet">
+      <!--         vue-->
+      <script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
+      <!--         axios-->
+      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-fixed-top navbar-inverse">
+        <div th:insert="~{common/common::user-top}"></div>
+    </nav><!-- /.navbar -->
+    <div class="bar">
+        <div th:replace="common/common::user-left"></div>
+    
+        <div class="container center_bar" id="app">
+          <div class="row row-offcanvas row-offcanvas-right">
+            <div class="user_info">
+                <table class="table">
+                   <thead>
+                    <th>订单编号</th>
+                    <th>宠物名</th>
+                    <th>价格</th>
+                    <th>购买时间</th>
+                    <th>操作</th>
+                   </thead>
+                   <tbody>
+                    <tr v-for="item in userBuy">
+                        <td>{{item.ubId}}</td>
+                        <td>{{item.petName}}</td>
+                        <td>{{item.createTime}}</td>
+                        <td>{{item.petPrice}}</td>
+                        <td>
+                            <button class="btn btn-default" type="submit" @click="lookPet(item.petId)">宠物详情</button>
+                            <button class="btn btn-default" type="submit" @click="delBuy(item.ubId)">删除订单</button>
+                        </td>
+                    </tr>
+                   </tbody>
+                </table>
+            </div>
+          </div>
+          <hr>
+          <footer>
+            <p>&copy; 2022 猫咖</p>
+          </footer>
+    
+        </div><!--/.container-->
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.cn/npm/jquery@1.12.4/dist/jquery.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="https://cdn.jsdelivr.cn/npm/@bootcss/v3.bootcss.com@1.0.44/assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="https://cdn.jsdelivr.cn/npm/@bootcss/v3.bootcss.com@1.0.44/dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="https://cdn.jsdelivr.cn/npm/@bootcss/v3.bootcss.com@1.0.44/assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="https://cdn.jsdelivr.cn/npm/@bootcss/v3.bootcss.com@1.0.44/examples/offcanvas/offcanvas.js"></script>
+
+  <script>
+      let vm = new Vue({
+          el:'#app',
+          data:{
+            userBuy:[]
+          },
+          methods:{
+              lookPet(petId){
+                  console.log(petId)
+                  // axios.get('/pet/lookDetail/'+petId)
+                  location.href = '/pet/lookDetail/'+petId
+              },
+              delBuy(ubId){
+                  console.log(ubId)
+                  let that = this
+                  axios.delete('/buy/delUserBuy/'+ubId).then(res=>{
+                      if (res.data){
+                          alert('删除订单成功')
+                          axios.get('/buy/userBuyPet').then(res=>{
+                              console.log(res.data)
+                              that.userBuy = res.data
+                          })
+                      }
+                  })
+              }
+          },
+          mounted(){
+              console.log('mounted')
+              let that = this
+              axios.get('/buy/userBuyPet').then(res=>{
+                  console.log(res.data)
+                    that.userBuy = res.data
+              })
+          }
+      })
+  </script>
+  </body>
+</html>

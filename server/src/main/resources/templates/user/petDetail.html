@@ -1,0 +1,86 @@
+
+<!doctype html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/static/images/zzy.jpg">
+    <title>猫咖</title>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/bootstrap-theme.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+      .img_bar{
+        width: 80%;
+        height: 400px;
+        margin: 0 auto;
+      }
+      .img_item{
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <li role="presentation" class="active"><a href="/index">主页</a></li>
+            <li role="presentation"><a href="/petUpload">寄养</a></li>
+            <li role="presentation"><a href="/shopPet">出售</a></li>
+            <li role="presentation"><a href="/mySelf">我的</a></li>
+          </ul>
+        </nav>
+        <h3 class="text-muted">猫咖</h3>
+      </div>
+
+      <div class="jumbotron">
+        <h1 th:text="${pet.getPetName()}">宠物猫名</h1>
+        <p class="lead" th:text="${pet.getPetIntro()}">猫的简介</p>
+        <p class="lead" th:text="${pet.getPetPrice()}">￥  </p>
+        <p class="lead" th:text="${user.getTelephone()}">联系方式: 15173999068</p>
+        <p><a class="btn btn-lg btn-success" role="button" th:href="@{/buy/buyCat/}+${pet.getPetId()}">购买</a></p>
+      </div>
+
+      <div class="img_bar">
+        <img class="img_item" src="/static/images/b1.jpg" th:src="${pet.getImgPath()}">
+      </div>
+
+      <div class="row marketing">
+        <div class="col-lg-6">
+          <h4>体重</h4>
+          <p th:text="${pet.getPetWeight()}"> </p>
+
+          <h4>性别</h4>
+          <p th:text="${pet.getPetGender()}"></p>
+
+          <h4>年龄</h4>
+          <p th:text="${pet.getPetAge()}"> </p>
+        </div>
+
+        <div class="col-lg-6">
+          <h4>种类</h4>
+          <p th:text="${pet.getPetType()}"></p>
+
+          <h4>生活习性</h4>
+          <p th:text="${pet.getPetLife()}"></p>
+
+          <h4>注意事项</h4>
+          <p></p>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2022 猫咖</p>
+      </footer>
+
+    </div> <!-- /container -->
+  </body>
+</html>
